@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Review Sentiment Analysis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      resize: none;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Movie Review Sentiment Analysis</h1>
+    <textarea id="reviewInput" placeholder="Enter your movie review here..."></textarea>
+    <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+    <div id="result" class="result"></div>
+  </div>
+  <script>
+    function analyzeSentiment() {
+      const review = document.getElementById("reviewInput").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (!review) {
+        resultDiv.textContent = "Please enter a review to analyze.";
+        resultDiv.style.color = "red";
+        return;
+      }
+
+      // Simple rule-based sentiment analysis
+      const positiveWords = ["great", "amazing", "excellent", "fantastic", "good", "love", "wonderful"];
+      const negativeWords = ["bad", "terrible", "awful", "boring", "disappointing", "hate", "poor"];
+
+      let score = 0;
+
+      review.split(/\s+/).forEach(word => {
+        if (positiveWords.includes(word.toLowerCase())) {
+          score++;
+        } else if (negativeWords.includes(word.toLowerCase())) {
+          score--;
+        }
+      });
+
+      if (score > 0) {
+        resultDiv.textContent = "Positive Sentiment 😊";
+        resultDiv.style.color = "green";
+      } else if (score < 0) {
+        resultDiv.textContent = "Negative Sentiment 😟";
+        resultDiv.style.color = "red";
+      } else {
+        resultDiv.textContent = "Neutral Sentiment 😐";
+        resultDiv.style.color = "orange";
+      }
+    }
+  </script>
+</body>
+</html>
